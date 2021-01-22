@@ -1,0 +1,25 @@
+.plantas-contenedor
+{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.plantas-datos
+{
+    border:  1px lavender solid;
+    text-align: center;
+    width: 200px;
+    margin-top: 3px;
+    background-color: rgba(0, 255, 0, 0.1);
+    padding: 3px;
+}
+
+.cabeceras
+{
+    background-color: lavenderblush;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid lavender;
+    width: 200px;
+}
+

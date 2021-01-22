@@ -1,0 +1,50 @@
+#mult {
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+  align-items: center;
+}
+
+input {
+  width: 100px;
+  height: 25px;
+  font-size: 20px;
+  text-align: center;
+}
+
+input[readonly="true"] {
+  background-color: #d5dbdb;
+}
+
+input[type="submit"] {
+  height: 150px;
+}
+
+.carac {
+  font-size: 150px;
+  height: 200px;
+  margin: 5px;
+}
+
+.matriz {
+  display: grid;
+  height: 130px;
+  margin-right: 10px;
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+}
+
+#matriz1 {
+  width: 350x;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#matriz2 {
+  width: 225px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#resultado {
+  width: 225px;
+  grid-template-columns: repeat(2, 1fr);
+}

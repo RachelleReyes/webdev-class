@@ -1,0 +1,64 @@
+<html>
+<head>
+
+    <script language="Javascript">
+		// localhost/12-EjercicioWebStorage2\example2Close
+        function redirectToFB(){
+			for(var i = 0; i<4; i++) {
+				var campo = "campo" + (i+1);
+				localStorage.setItem(campo,document.getElementById(campo).value);
+			}
+		
+            window.opener.location.href="index.html";
+            self.close();
+        }
+
+    </script>
+
+</head>
+<body>
+
+    Allow the user to view FB
+    <br/>Are you sure?
+    <input type="button" value="Ok" OnClick="redirectToFB()" />
+	<div class = "center">
+    <form id="formulario2"> 
+        Campo 1: <input type="text" id="campo1" /> <br>
+		Campo 2: <input type="text" id="campo2" /> <br>
+		Campo 3: <input type="text" id="campo3" /> <br>
+		Campo 4: <input type="text" id="campo4" /> <br>
+		<button id = "close" >Cerrar</button>
+		<!--<button id = "close">Cerrar</button>-->
+		<input type="button" value="Ok" OnClick="redirectToFB()" />
+    </form>
+	</div>
+	
+    <script>
+	
+
+	var campos = [];
+	
+	function checkStorage(){
+		if (typeof(Storage) !== "undefined") {
+			for(var i = 0; i<4; i++) {
+				var campo = "campo" + (i+1);
+				if (localStorage.getItem(campo) === null) {
+					console.log("ITS NULL BIATCH");
+					campos[i] = document.getElementById(campo).value;
+				}else{
+					console.log("ITS NOT NULL BIATCH");
+					campos[i] = localStorage.getItem(campo);
+					document.getElementById(campo).value = campos[i];
+				}
+				localStorage.setItem(campo,campos[i]);
+				console.log(campo + " : "+ localStorage.getItem(campo));
+			}
+		} else {
+			console.log("El navegador no soporta WebStorage");
+		}
+	}
+	checkStorage();
+    </script>
+
+</body>
+</html>

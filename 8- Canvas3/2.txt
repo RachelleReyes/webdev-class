@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+	<script>
+	
+		
+
+			var square = 50;
+			var baseDir = 50;
+			var baseY = 300;
+			var baseX = 100;
+			
+			var rectX1 = baseX;
+			var rectY1 = baseY;
+			var direccion1 = -baseDir;
+			
+			var rectX2 = baseX+square;
+			var rectY2 = baseY-baseDir*2;
+			var direccion2 = -baseDir;
+			
+			var rectX3 = baseX+square*2;
+			var rectY3 = baseY-baseDir*3;
+			var direccion3 = -baseDir;
+			
+			var rectX4 = baseX+square*3;
+			var rectY4 = baseY-baseDir*4;
+			var direccion4 = -baseDir;
+			
+			var height1 = baseDir;
+			
+			
+		function dibujar(){
+			var canvas = document.getElementById("micanvas");
+		
+			if(canvas.getContext) {
+			
+				var contexto = canvas.getContext('2d');
+				contexto.fillStyle = 'black';
+				contexto.save();
+				
+				if(height1== baseDir){
+					direccion1 = -baseDir;
+				}else if(height1 == 200){
+					direccion1 = baseDir;
+				}
+				
+				height1 +=direccion1;
+				contexto.fillRect(baseX, baseY,square,height1);
+				
+				//contexto.clearRect(0,0,canvas.width,canvas.height);
+				/*
+				contexto.fillRect(rectX1, baseY-square,square*4,square);
+				contexto.save();
+				
+				if(rectY1 == baseDir){
+					direccion1 = baseDir;
+					contexto.clearRect(rectX1, rectY1,square,square);
+				}else if(rectY1 == 250){
+					direccion1 = -baseDir;
+				}
+				if(direccion1>0){
+					contexto.fillStyle = 'white';
+				}else{
+					contexto.fillStyle = 'black';
+				}
+				
+				rectY1 += direccion1;
+				contexto.fillRect(rectX1, rectY1,square,square);
+				
+				contexto.restore();
+				contexto.save();
+				if(rectY2 == baseDir){
+					direccion2 = baseDir;
+					contexto.clearRect(rectX2, rectY2,square,square);
+				}else if(rectY2 == baseY){
+					direccion2 = -baseDir;
+				}
+				
+				if(direccion2>0){
+					contexto.fillStyle = 'white';
+				}else{
+					contexto.fillStyle = 'black';
+				}
+				
+				// 5 SQUARES
+				rectY2 += direccion2;
+				contexto.fillRect(rectX2, rectY2,square,square);
+				
+				contexto.restore();
+				contexto.save();
+				if(rectY3 == baseDir){
+					direccion3 = baseDir;
+					contexto.clearRect(rectX3, rectY3,square,square);
+				}else if(rectY3 == baseY){
+					direccion3 = -baseDir;
+				}
+				
+				if(direccion3>0){
+					contexto.fillStyle = 'white';
+				}else{
+					contexto.fillStyle = 'black';
+				}
+				
+				// 5 SQUARES
+				rectY3 += direccion3;
+				contexto.fillRect(rectX3, rectY3,square,square);
+				
+				contexto.restore();
+				contexto.save();
+				if(rectY4 == baseDir){
+					direccion4 = baseDir;
+					contexto.clearRect(rectX4, rectY4,square,square);
+				}else if(rectY4 == baseY){
+					direccion4 = -baseDir;
+				}
+				
+				if(direccion4>0){
+					contexto.fillStyle = 'white';
+				}else{
+					contexto.fillStyle = 'black';
+				}
+				
+				// 5 SQUARES
+				rectY4 += direccion4;
+				contexto.fillRect(rectX4, rectY4,square,square);
+				
+				contexto.restore();
+				*/
+			}
+			//window.requestAnimationFrame(dibujar);
+			window.setTimeout(dibujar,200); 
+		}
+		
+		
+	</script>
+	</head>
+	<body onload = "dibujar();">
+		<canvas id = "micanvas" width = "600" height = "600" style = "border: solid black 1px"> </canvas>
+	</body>
+</html>

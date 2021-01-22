@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+	<script>
+		function dibujar(){
+		var canvas = document.getElementById("micanvas");
+		
+		if(canvas.getContext) {
+			
+			var contexto = canvas.getContext('2d');
+			var sin = Math.sin(Math.PI/6);
+			var cos = Math.cos(Math.PI/6);
+			
+			contexto.translate(300,300);
+			for(var i = 0; i<=12; i++){
+				contexto.beginPath();
+				contexto.arc(100,0,5,0,360);
+				contexto.fillStyle = 'green'
+				contexto.fill()
+				contexto.closePath()
+			}
+			
+			contexto.resetTransform();
+			contexto.fillStyle = "red";
+			contexto.fillRect(200, 0, 100, 30);
+		
+		}
+	
+	}
+		
+	</script>
+	</head>
+	<body onload = "dibujar();">
+		<canvas id = "micanvas" width = "600" height = "600" style = "border: solid black 1px"> </canvas>
+	</body>
+</html>

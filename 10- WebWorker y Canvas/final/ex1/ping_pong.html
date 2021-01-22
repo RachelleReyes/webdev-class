@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ping Pong</title>
+	</head>
+<body>
+	 
+    <canvas id="mycanvas" width="900" height="500" style="border:3px solid black;"></canvas>
+    <script>
+        var canvas = document.getElementById('mycanvas');
+        var ctx = canvas.getContext('2d');
+
+        var p = { x: 25, y: 25 };
+        var velocidad = 5,
+            esquina = 50,
+            radio = 20;
+        var pelota = { x: p.x, y: p.y };
+        var moveX = Math.cos(Math.PI / 180 * esquina) * velocidad;
+        var moveY = Math.sin(Math.PI / 180 * esquina) * velocidad;
+
+		function rect(x,y,w,h) {
+			ctx.beginPath();
+			ctx.rect(x,y,w,h);
+			ctx.closePath();
+			ctx.fill();
+			ctx.stroke();
+		}
+
+		function clear() {
+			ctx.clearRect(0, 0, WIDTH, HEIGHT);
+		}
+		
+		function doKeyDown(evt){
+			switch (evt.keyCode) {
+				case 38:  /* Up arrow was pressed */
+					if (y - dy > 0){
+						y -= dy;
+					}
+					break;
+				case 40:  /* Down arrow was pressed */
+					if (y + dy < HEIGHT){
+						y += dy;
+					}
+					break;
+				case 37:  /* Left arrow was pressed */
+					if (x - dx > 0){
+						x -= dx;
+					}
+					break;
+				case 39:  /* Right arrow was pressed */
+					if (x + dx < WIDTH){
+						x += dx;
+					}
+					break;
+			}
+		}
+
+		
+        function Dibujar() {
+            ctx.clearRect(0, 0, 900,500);
+
+            if (pelota.x > canvas.width - radio || pelota.x < radio) moveX = -moveX;
+            if (pelota.y > canvas.height - radio || pelota.y < radio) moveY = -moveY;
+
+            pelota.x += moveX;
+            pelota.y += moveY;
+
+            ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.arc(pelota.x, pelota.y, radio, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.closePath();
+        }
+		
+		function draw() {
+			clear();
+			ctx.fillStyle = "white";
+			ctx.strokeStyle = "black";
+			rect(0,0,WIDTH,HEIGHT);
+			ctx.fillStyle = "purple";
+			//circle(x, y, 10);
+			rect(x,y,20,150);
+		}
+
+		init();
+		window.addEventListener('keydown',doKeyDown,true);
+		
+		
+        setInterval(Dibujar, 10);
+		setInterval(draw, 10);
+		//https://codepen.io/d4ndres/pen/YdWXNQ
+		//http://techfunda.com/Examples/Show/1068
+		
+
+    </script>
+	<div id = "footer"> 
+		Player 1 
+		<input type="text" id="player1" value="0" readonly>
+		<input type="text" id="player2" value="0" readonly>
+		Player 2
+	</div> 
+	
+</body>
+</html>

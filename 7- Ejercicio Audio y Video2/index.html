@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--Ejercicio Video y Audio 2-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="cam.css" />
+    <title>Ejercicio Webcam</title>
+  </head>
+  <body>
+    <div class="container" id="main">
+      <div id="css-video">
+        <video src="" id="camara" autoplay></video>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button id="saturado">Saturado</button><br />
+      <button id="borroso">Borroso</button><br />
+      <button id="grises">Grises</button>
+    </div>
+
+    <video src="" id="filtros" autoplay></video>
+
+    <script>
+      var video = document.querySelector("#camara");
+      var filtrocam = document.querySelector("#camara-filtros");
+
+      var saturado = document.querySelector("#saturado");
+      var borroso = document.querySelector("#borroso");
+      var grises = document.querySelector("#grises");
+      var filtros = document.getElementById("filtros");
+
+      var objConfiguracion = {
+        audio: true,
+        video: true,
+      };
+
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia(objConfiguracion)
+          .then(function (stream) {
+            video.srcObject = stream;
+            filtros.srcObject = stream;
+
+            saturado.addEventListener("click", (e) => {
+              filtros.style.filter = "saturate(1000%)";
+            });
+
+            borroso.addEventListener("click", (e) => {
+              filtros.style.filter = "blur(10px)";
+            });
+
+            grises.addEventListener("click", (e) => {
+              filtros.style.filter = "grayscale(100%)";
+            });
+          })
+          .catch(function (error) {
+            console.log("error!" + error);
+          });
+      }
+    </script>
+  </body>
+</html>

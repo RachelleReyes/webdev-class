@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ping Pong</title>
+		<link rel="stylesheet" href="ping_pong.css" />
+		
+	</head>
+<body>
+	 
+    <canvas id="micanvas" width="900" height="500" style="border:3px solid black";></canvas>
+	<!--<script src="pong.js"></script>-->
+    <script>
+        /*var canvas = document.getElementById('micanvas');
+        var ctx = canvas.getContext('2d');
+
+        var p = { x: 25, y: 25 };
+        var velocidad = 5,
+            esquina = 50,
+            radio = 20;
+        var pelota = { x: p.x, y: p.y };
+        var moveX = Math.cos(Math.PI / 180 * esquina) * velocidad;
+        var moveY = Math.sin(Math.PI / 180 * esquina) * velocidad;
+
+        function Dibujar() {
+            ctx.clearRect(0, 0, 900,500);
+
+            if (pelota.x > canvas.width - radio || pelota.x < radio) moveX = -moveX;
+            if (pelota.y > canvas.height - radio || pelota.y < radio) moveY = -moveY;
+
+            pelota.x += moveX;
+            pelota.y += moveY;
+
+            ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.arc(pelota.x, pelota.y, radio, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.closePath();
+        }
+        setInterval(Dibujar, 10);
+		//https://codepen.io/d4ndres/pen/YdWXNQ
+		//http://techfunda.com/Examples/Show/1068
+		
+		*/
+		var canvas = document.getElementById('micanvas');
+		var ctx = canvas.getContext('2d');
+		
+		
+		var WIDTH = 900;
+		var HEIGHT = 500;
+		
+		var x = 5;
+		var y = HEIGHT/3;
+		
+		var rectx = 20;
+		var recty = 150;
+		
+		var dx = 5;
+		var dy = 5;
+
+        var p = { x: 25, y: 25 };
+        var velocidad = 5,
+            esquina = 50,
+            radio = 20;
+        var pelota = { x: p.x, y: p.y };
+        var moveX = Math.cos(Math.PI / 180 * esquina) * velocidad;
+        var moveY = Math.sin(Math.PI / 180 * esquina) * velocidad;
+
+		function rect(x,y,w,h) {
+			ctx.beginPath();
+			ctx.fillStyle = "purple";
+			ctx.rect(x,y,w,h);
+			ctx.fill();
+			ctx.closePath();
+			//ctx.stroke();
+		}
+
+		function clear() {
+			ctx.clearRect(0, 0, WIDTH, HEIGHT);
+		}
+		
+		function doKeyDown(evt){
+			switch (evt.keyCode) {
+				case 38:  /* Up arrow was pressed */
+					if (y - dy > 0){
+						y -= dy;
+					}
+					break;
+				case 40:  /* Down arrow was pressed */
+					if (y + dy < HEIGHT){
+						y += dy;
+					}
+					break;
+			}
+		}
+
+		
+        function Pelota() {
+            clear();
+
+            if (pelota.x > canvas.width - radio || pelota.x < radio) moveX = -moveX;
+            if (pelota.y > canvas.height - radio || pelota.y < radio) moveY = -moveY;
+
+            pelota.x += moveX;
+            pelota.y += moveY;
+
+            ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.arc(pelota.x, pelota.y, radio, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.closePath();
+        }
+		
+		function Player() {
+			clear();
+			rect(x,y,rectx,recty);
+		}
+
+		//init();
+		//requestAnimationFrame(animate);  
+		window.addEventListener('keydown',doKeyDown,true);
+		
+		function play(){
+			Pelota();
+			Player();
+		}
+		//setInterval(play, 10);
+		setInterval(Player, 15);
+        setInterval(Pelota, 5);
+		
+		//https://codepen.io/d4ndres/pen/YdWXNQ
+		//http://techfunda.com/Examples/Show/1068
+    </script>
+	<div id = "footer"> 
+		Player 1 
+		<input type="text" id="player1" value="0" readonly>
+		<input type="text" id="player2" value="0" readonly>
+		Player 2
+	</div> 
+	
+</body>
+</html>

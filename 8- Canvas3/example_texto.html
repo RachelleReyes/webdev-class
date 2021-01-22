@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+	<script>
+		function dibujar(){
+		var canvas = document.getElementById("micanvas");
+		
+		if(canvas.getContext) {
+			
+			var contexto = canvas.getContext('2d');
+			contexto.save();
+			
+			contexto.fillRect(1, 10, 10, 10);
+			
+			contexto.scale(20,1);
+			contexto.fillStyle = "gray";
+			contexto.fillRect(1, 10, 10, 10);
+			
+			contexto.restore();
+			
+			contexto.font = "48px serif";
+			contexto.fillText('TEXTO', 100, 100);
+			
+			contexto.scale(-1,1);
+			contexto.fillText('TEXTO', -200, 100);
+		}
+	
+	}
+		
+	</script>
+	</head>
+	<body onload = "dibujar();">
+		<canvas id = "micanvas" width = "600" height = "600" style = "border: solid black 1px"> </canvas>
+	</body>
+</html>

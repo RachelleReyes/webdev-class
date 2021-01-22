@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="webworker.css" />
+  </head>
+  <body>
+    <form id="fib">
+      <div>
+        <p>Numero:</p>
+        <input type="text" id="numero" />
+      </div>
+      <div>
+        <p>Fibonacci:</p>
+        <p id="Resultado"></p>
+      </div>
+      <input type="submit" value="calcular" />
+    </form>
+    <script>
+      var numero = document.getElementById("numero");
+      var resultado = document.getElementById("Resultado");
+      var send = document.querySelector("#fib");
+
+      if (window.Worker) {
+        var mi_worker = new Worker("webworker.js");
+
+        send.onsubmit = function (e) {
+          e.preventDefault();
+          mi_worker.postMessage(numero.value);
+        };
+
+        mi_worker.onmessage = function (e) {
+          resultado.innerHTML = e.data;
+          console.log("fibonacci: " + e.data);
+        };
+      } else {
+        console.log("El navegador no soporta WEbWorkers");
+      }
+    </script>
+  </body>
+</html>

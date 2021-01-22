@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video id="elvideo" src="videos/MP4_480_1_5MG.mp4"></video>
+    <br />
+    <button id="next">Otro Video</button>
+    <script>
+      let video = document.getElementById("elvideo");
+      let otro = document.getElementById("next");
+
+      video.onloadedmetadata = function () {
+        video.controls = true;
+        video.play();
+      };
+
+      otro.onclick = function (e) {
+        video.src = "videos/VfE_html5.mp4";
+        video.play();
+      };
+    </script>
+  </body>
+</html>

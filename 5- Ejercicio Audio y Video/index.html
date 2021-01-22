@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--Ejercicio Audio y Video-->
+<!--GOOGLE CHROME BROWSER USED-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Multimedia-Ejercicio1</title>
+  </head>
+  <body>
+    <video class="container_div" id="play_video"></video><br />
+    <div class="container_div" id="videos_div"></div>
+
+    <script>
+      let video = document.getElementById("play_video");
+      let videos_div = document.getElementById("videos_div");
+
+      var archivos = [
+        "AcceptableShockingBoar.webm", "AgedRealCob.webm", "AliveThankfulCreature.webm",
+        "BadNegativeArgentine.webm","MP4_480_1_5MG.mp4","MelodicAbandonedBeagle.webm",
+        "VfE_html5.mp4",  "small.ogv", "鬼滅の刃OP.mp4",
+      ];
+
+      archivos.forEach(function (archivo) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "contenedorV");
+        var v = document.createElement("video");
+        v.setAttribute("class", "cuadro");
+        v.setAttribute("src", "videos/" + archivo);
+        v.setAttribute("tabindex", "0");
+
+        v.onclick = function () {
+          video.setAttribute("src", "videos/" + archivo);
+        };
+
+        v.onmouseover = function () {
+          v.muted = true;
+          v.play();
+        };
+
+        v.onmouseleave = function () {
+          v.load();
+        };
+
+        var label = document.createElement("label");
+        label.innerHTML = archivo.substr(0, archivo.lastIndexOf("."));
+        div.append(v);
+        div.append(label);
+        videos_div.append(div);
+      });
+
+      video.onloadedmetadata = function () {
+        video.controls = true;
+        video.play();
+      };
+    </script>
+  </body>
+</html>

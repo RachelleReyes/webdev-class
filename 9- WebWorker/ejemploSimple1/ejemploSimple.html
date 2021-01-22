@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <form>
+      <div>
+        <p>Numero 1:</p>
+        <input type="text" id="numero1" />
+        <p>Numero 2:</p>
+        <input type="text" id="numero2" />
+      </div>
+
+      <div>
+        <p>Resultado</p>
+        <p id="Resultado"></p>
+      </div>
+    </form>
+    <script>
+      var numero1 = document.getElementById("numero1");
+      var numero2 = document.getElementById("numero2");
+      var resultado = document.getElementById("Resultado");
+
+      if (window.Worker) {
+        var mi_worker = new Worker("webworker.js");
+
+        numero1.onchange = function () {
+          mi_worker.postMessage([numero1.value, numero2.value]);
+          console.log("datos enviado: " + numero1.value + " " + numero2.value);
+        };
+
+        numero2.onchange = function () {
+          mi_worker.postMessage([numero1.value, numero2.value]);
+          console.log("datos enviado: " + numero1.value + " " + numero2.value);
+        };
+
+        mi_worker.onmessage = function (e) {
+          resultado.innerHTML = e.data;
+          console.log("resultado: " + e.data);
+        };
+      } else {
+        console.log("El navegador no soporta WEbWorkers");
+      }
+    </script>
+  </body>
+</html>

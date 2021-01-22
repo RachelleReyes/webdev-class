@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			
+		}
+		.center {
+			width: 350px;
+			height: 200px;
+			border:3px solid black;
+		}
+		
+		#formulario{
+			padding: 50px;
+		}
+		
+		button{
+			float: right;
+		}
+		
+		
+	</style> 
+  </head>
+  <body>
+	<div class = "center">
+		<button type="submit" form="formulario" value="submit">O</button>
+		<form id="formulario"> 
+			Campo 1: <input type="text" id="campo1" /> <br>
+			Campo 2: <input type="text" id="campo2" /> <br>
+			Campo 3: <input type="text" id="campo3" /> <br>
+			Campo 4: <input type="text" id="campo4" /> <br>
+		</form>
+	</div>
+	
+	<div id = "content" style="display: none;">
+		<form id="formulario2"> 
+			Campo 1: <input type="text" id="campo1" /> <br>
+			Campo 2: <input type="text" id="campo2" /> <br>
+			Campo 3: <input type="text" id="campo3" /> <br>
+			Campo 4: <input type="text" id="campo4" /> <br>
+			<button type="submit" form="formulario2" onclick="javascript:var win = window.open('', '_self');win.close();">Cerrar</button>
+		</form>
+	</div>
+    <script>
+	
+      var send = document.querySelector("#formulario");
+	  var campos = [];
+	  var popup;
+	  
+	  if (typeof(Storage) !== "undefined") {
+			//window.localStorage.length
+	  
+	  
+		for(var i = 0; i<4; i++) {
+			
+			var campo = "campo" + (i+1);
+			/*
+			if (localStorage.getItem(campo) === null) {
+				campos[i] =  document.getElementById(campo).value;
+				localStorage.setItem(campo,campos[i]);
+			}else{
+				document.getElementById(campo).value = localStorage.getItem(campo);
+			}*/
+			//if (localStorage.getItem(campo) === null) {
+			if (localStorage.getItem(campo) === null) {
+				console.log("ITS NULL BIATCH");
+				campos[i] = document.getElementById(campo).value;
+				//document.getElementById(campo).value = localStorage.getItem(campo);
+			}else{
+				console.log("ITS NOT NULL BIATCH");
+				campos[i] = localStorage.getItem(campo);
+				document.getElementById(campo).value = campos[i];
+			}
+			//campos[i] =  document.getElementById(campo).value;
+			localStorage.setItem(campo,campos[i]);
+			console.log(campo + " : "+ localStorage.getItem(campo));
+			//localStorage.setItem(campo,campos[i]);
+		}
+		
+	
+		} else {
+			console.log("El navegador no soporta WebStorage");
+		}
+	  
+		send.onsubmit = function () {
+			//mi_worker.postMessage(numero.value);
+			/*
+			var y = window.outerHeight / 2 + window.screenY - ( 200 / 2);
+			var x = window.outerWidth / 2 + window.screenX - ( 350 / 2);
+			window.open('popup.html','_blank','top=' + y + ', left=' + x',width=350 ,height=200');
+			*/
+			for(var i = 0; i<4; i++) {
+				var campo = "campo" + (i+1);
+				localStorage.setItem(campo,document.getElementById(campo).value);
+			}
+			
+			
+			var h = 150;
+			var w = 300;
+			var y = window.outerHeight/2 + window.screenY - (h/2);
+			var x = window.outerWidth/2 + window.screenX - (w/2);
+			
+			//var popup = window.open('popup.html', '_blank', ' width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+			//popup.focus();
+			
+			//var popup = window.open('popup.html', '_blank', ' width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+			//popup.focus();
+			
+			//var popup = window.open('','','width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+			//popup.document.body.innerHTML = window.document.getElementByClass('center').innerHTML;
+			
+			/*var codeContents = $("#content").html();
+			var popup = window.open('','','width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+			popup.document.body.innerHTML = codeContents;
+			*/
+			
+			/*
+			var container = document.createElement('div');
+			container.setAttribute("id", 'content');
+			 
+			for (i=0;i<4;i++){
+                // Append a node with a random text
+                // Create an <input> element, set its type and name attributes
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "member" + i;
+                container.appendChild(input);
+                // Append a line break 
+                container.appendChild(document.createElement("br"));
+            }
+			
+			var w = window.open('','','width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);*/
+			var w = window.open('','','width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+			w.document.body.innerHTML = window.document.getElementById('content').innerHTML;
+			
+			
+			//return window.open('popup.html', "PopUp", 'toolbar=no, width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+			
+			
+		};
+		
+		function close(){
+			popup.close();
+		}
+	
+    </script>
+  </body>
+</html>

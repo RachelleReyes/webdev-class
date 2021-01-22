@@ -1,0 +1,4 @@
+Ejercicios Audio y Video 2
+
+Hacer una pagina que te muestre el feedback de tu webcam, y a ese feedback aplicarle filtros como (saturación, escala grises, blur etc) mediante los filtros de CSS
+Mostrar el feedback modificado en otro tag. como en las imágenes

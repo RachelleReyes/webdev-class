@@ -1,0 +1,85 @@
+function dibujar(){
+			var canvas = document.getElementById("micanvas");
+			
+			if(canvas.getContext) {
+				
+				var contexto = canvas.getContext('2d');
+				contexto.fillStyle = 'gray';
+				contexto.fillRect(0, 0, 150, 150);
+				contexto.save();
+				
+				contexto.fillStyle = 'red';
+				contexto.fillRect(15, 15, 120, 120);
+				contexto.save();
+				
+				contexto.fillStyle = 'blue';
+				contexto.globalAlpa = 0.5;
+				contexto.fillRect(30, 30, 90, 90);
+				
+				contexto.restore();
+				contexto.fillRect(45,45,60,60);
+				
+				contexto.restore();
+				contexto.fillRect(60,60,30,30);
+			}
+		
+		}
+		
+		
+		
+function dibujar(){
+			var canvas = document.getElementById("micanvas");
+			
+			if(canvas.getContext) {
+				
+				var contexto = canvas.getContext('2d');
+				contexto.save();
+				
+				contexto.fillStyle = 'red';
+				contexto.fillRect(30, 30, 100, 100);
+				
+				contexto.rotate(15*(Math.PI/100));
+				
+				contexto.fillStyle = 'skyblue';
+				contexto.fillRect(30, 30, 100, 100);
+				contexto.restore();
+				
+				contexto.fillStyle = 'green';
+				contexto.fillRect(150, 30, 100, 100);
+				
+				contexto.translate(200,80);
+				contexto.rotate(45*(Math.PI/180));
+				
+				contexto.fillStyle = 'blue';
+				contexto.fillRect(150, 30, 100, 100);
+			}
+		
+		}
+		
+		
+function dibujar(){
+			var canvas = document.getElementById("micanvas");
+			
+			if(canvas.getContext) {
+				
+				var contexto = canvas.getContext('2d');
+				contexto.save();
+				
+				contexto.fillRect(1, 10, 10, 10);
+				
+				contexto.scale(20,1);
+				contexto.fillStyle = "gray";
+				contexto.fillRect(1, 10, 10, 10);
+				
+				contexto.restore();
+				
+				contexto.font = "48px serif";
+				contexto.fillText('TEXTO', 100, 100);
+				
+				contexto.scale(-1,1);
+				contexto.fillText('TEXTO', -200, 100);
+			}
+		
+		}
+		
+		

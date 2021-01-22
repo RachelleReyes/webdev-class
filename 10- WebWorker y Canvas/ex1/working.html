@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ping Pong</title>
+		
+	</head>
+<body>
+	 
+    <canvas id="micanvas" width="900" height="500" style="border:3px solid black";></canvas>
+    <script>
+       
+		var canvas = document.getElementById('micanvas');
+		var ctx = canvas.getContext('2d');
+		var mi_worker = new Worker("webworker.js");
+		
+		var WIDTH = 900;
+		var HEIGHT = 500;
+		
+		var player1x = 5, player1y = HEIGHT/3;;
+		var player2x = canvas.width-25,player2y = HEIGHT/3;
+		var rectx = 20,recty = 150;
+		var dx = 25, dy = 25;
+		var score1=0, score2=0;
+
+        var p = { x: 25, y: 25 };
+        var velocidad = 10,esquina = 50,radio = 15;
+        var pelota = { x: p.x, y: p.y };
+        var moveX = Math.cos(Math.PI / 180 * esquina) * velocidad;
+        var moveY = Math.sin(Math.PI / 180 * esquina) * velocidad;
+
+		function rect(color,x,y,w,h) {
+			ctx.beginPath();
+			ctx.fillStyle = color;
+			ctx.rect(x,y,w,h);
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		function clear() {
+			ctx.clearRect(0, 0, WIDTH, HEIGHT);
+		}
+		
+		function players(evt){
+			switch (evt.keyCode) {
+				case 87:  /* ARRIBA PLAYER 1 */
+					if (player1y - dy > 0){
+						player1y -= dy;
+					}
+					break;
+				case 83:  /* ABAJO PLAYER 1  */
+					if (player1y + dy < HEIGHT-recty){
+						player1y += dy;
+					}
+					break;
+					
+				case 38:  /* ARRIBA PLAYER 2 */
+					if (player2y - dy > 0){
+						player2y -= dy;
+					}
+					break;
+				case 40: /* ABAJO PLAYER 2 */
+					if (player2y + dy < HEIGHT-recty){
+						player2y += dy;
+					}
+					break;
+			}
+		}
+
+		
+        function game() {
+            clear();
+			rect('green',player1x,player1y,rectx,recty);
+			rect('purple',player2x,player2y,rectx,recty);
+		
+			if (window.Worker) {
+			
+				mi_worker.postMessage([pelota.x,pelota.y,moveX,moveY,player1y,player2y,score1,score2]);
+				mi_worker.onmessage = function (e) {
+				 moveX = e.data[0];
+				 moveY = e.data[1];
+				 score1 = e.data[2];
+				 score2 = e.data[3];
+				 pelota.x += moveX;
+				 pelota.y += moveY;
+				document.getElementById('player1').value = score1;
+				document.getElementById('player2').value = score2;
+				};
+				
+			} else {
+				console.log("El navegador no soporta WebWorkers");
+			}
+			
+            ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.arc(pelota.x, pelota.y, radio, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.closePath();
+			
+        }
+		
+		window.addEventListener('keydown',players,true);
+		setInterval(game, 1000 / 50);
+		
+		//https://codepen.io/d4ndres/pen/YdWXNQ
+		//http://techfunda.com/Examples/Show/1068
+    </script>
+	<div id = "footer"> 
+		Player 1 
+		<input type="text" id="player1" value="0" readonly>
+		<input type="text" id="player2" value="0" readonly>
+		Player 2
+	</div> 
+	
+</body>
+</html>

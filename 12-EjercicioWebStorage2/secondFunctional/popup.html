@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			
+		}
+		.center {
+			width: 350px;
+			height: 200px;
+			border:3px solid black;
+		}
+		
+		#formulario2{
+			padding: 45px;
+		}
+		
+		button{
+			float: left;
+		}
+	</style> 
+
+  </head>
+  <body>
+	<div class = "center">
+    <form id="formulario2"> 
+        Campo 1: <input type="text" id="campo1" /> <br>
+		Campo 2: <input type="text" id="campo2" /> <br>
+		Campo 3: <input type="text" id="campo3" /> <br>
+		Campo 4: <input type="text" id="campo4" /> <br>
+    <!--<button type="submit" value="submit" onclick="parent.window.close();">Cerrar</button>-->
+	<!--<button id = "close" onclick="window.close();">Cerrar</button>-->
+	<!--onclick="parent.window.close();"
+	onClick="javascript:window.close('','_parent','');"
+	
+	<a href="#" id="close-window">Close this window tab</a>
+	-->
+	<button id = "close" onclick="javascript:var win = window.open('', '_self');win.close();">Cerrar</button>
+	
+
+    </form>
+		<button onclick="window.parent.closeWin()">Cerrar</button>
+	</div>
+    <script>
+	
+	
+
+	var close = document.querySelector("#formulario2");
+	var campos = [];
+	/*
+	document.getElementById("close-window").addEventListener("click", function(){ 
+       window.close(); });
+	   */
+
+	for(var i = 0; i<4; i++) {
+		var campo = "campo" + (i+1);
+		if (localStorage.getItem(campo) === null) {
+			console.log("ITS NULL BIATCH");
+			campos[i] = document.getElementById(campo).value;
+			//document.getElementById(campo).value = localStorage.getItem(campo);
+		}else{
+			campos[i] = localStorage.getItem(campo);
+			document.getElementById(campo).value = campos[i];
+		}
+		//campos[i] =  document.getElementById(campo).value;
+		localStorage.setItem(campo,campos[i]);
+		console.log(campo + " : "+ localStorage.getItem(campo));
+	}
+	  /*
+	  close.onsubmit = function () {
+			window.opener = self;
+			window.close();
+			for(var i = 0; i<4; i++) {
+				var campo = "campo" + (i+1);
+				localStorage.setItem(campo,document.getElementById(campo).value);
+			}
+		};*/
+	  /*
+	 (function() {
+
+	  document.getElementById("close").onclick = function() {
+		setTimeout(function() {
+		
+		  var window = window.open("PopUp", "_self");
+		  window.close();
+		}, 5000);
+		return false;
+	  };
+
+	})(); 
+	*/
+	  
+	function close(){
+	
+		//alert("Hello! I am an alert box!!");
+		
+		for(var i = 0; i<4; i++) {
+			var campo = "campo" + (i+1);
+			localStorage.setItem(campo,document.getElementById(campo).value);
+			
+		}
+		
+		var win = window.open('', '_self');
+		win.close();
+		
+		//var win = window.open("PopUp", "_self");
+		//win.close();
+		
+		//window.opener = self;
+		//window.close();
+		/*
+		for(var i = 0; i<4; i++) {
+			var campo = "campo" + (i+1);
+			localStorage.setItem(campo,document.getElementById(campo).value);
+		}
+		*/
+	}  
+	  
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="cam.css" />
+    <title>Ejercicio Cam</title>
+  </head>
+  <body>
+    <div id="main">
+      <div id="css-video">
+        <video src="" id="camara" autoplay></video>
+      </div>
+    </div>
+
+    <button id="gb">GRABAR</button>
+    <div>
+      <video src="" id="preview" autoplay></video>
+    </div>
+    <script>
+      var video = document.querySelector("#camara");
+      var filtrocam = document.querySelector("#camara-filtros");
+      var previo = document.querySelector("#preview");
+      var botong = document.querySelector("#gb");
+
+      var objConfiguracion = {
+        audio: true,
+        video: true,
+      };
+
+      var DATA = [];
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia(objConfiguracion)
+          .then(function (stream) {
+            video.srcObject = stream;
+            var grabar = new MediaRecorder(stream);
+
+            botong.addEventListener("click", (e) => {
+              botong.toggle = !botong.toggle;
+              if (botong.toggle) {
+                grabar.start();
+                botong.innerHTML = "Parar Grabar";
+                console.log(grabar.state);
+              } else {
+                grabar.stop();
+                botong.innerHTML = "Grabar";
+                console.log(grabar.state);
+              }
+            });
+
+            grabar.ondatavailable = function (e) {
+              DATA.push(e.data);
+            };
+
+            grabar.onstop = function (e) {
+              let dataBinaria = new Blob(DATA, { type: "video/mp4" });
+              DATA = [];
+              let videoURL = window.URL.createObjectURL(dataBinaria);
+              previo.src = videoURL;
+              previo.controls = true;
+            };
+          })
+          .catch(function (error) {
+            console.log("error!" + error);
+          });
+      }
+    </script>
+  </body>
+</html>

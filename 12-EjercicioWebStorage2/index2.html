@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+	<div>
+    <form id="formulario" width="900px" height="500px" style="border:3px solid black";> 
+        Campo 1: <input type="text" id="campo1" /> <br>
+		Campo 2: <input type="text" id="campo2" /> <br>
+		Campo 3: <input type="text" id="campo3" /> <br>
+		Campo 4: <input type="text" id="campo4" /> <br>
+		<input type="submit" value="X" /> <br>
+    </form>
+	</div>
+    <script>
+	  if(campo1!=0)
+      var campo1 = document.getElementById("campo1");
+      var campo2 = document.getElementById("campo2");
+      var campo1 = document.getElementById("campo1");
+      var campo2 = document.getElementById("campo2");
+      var send = document.querySelector("#formulario");
+	  
+	  if (typeof(Storage) !== "undefined") {
+		  // Guardar
+		  localStorage.setItem("campo1",campo1);
+		  localStorage.setItem("campo2",campo2);
+		  localStorage.setItem("campo3",campo3);
+		  localStorage.setItem("campo4",campo4);
+		  // Obtener
+		  document.getElementById("campo1").value = localStorage.getItem("campo1");
+		  document.getElementById("campo2").value = localStorage.getItem("campo2");
+		  document.getElementById("campo3").value = localStorage.getItem("campo3");
+		  document.getElementById("campo4").value = localStorage.getItem("campo4");
+		} else {
+			console.log("El navegador no soporta WebStorage");
+		}
+	  
+		send.onsubmit = function () {
+			//mi_worker.postMessage(numero.value);
+			window.open('sample.html','_blank','width=200,height=300');
+		};
+		/*
+		$('#formulario').click(function() {
+
+			window.open('sample.html','_blank','width=200,height=300');
+
+		}):*/
+	  
+		/*
+      if (window.Worker) {
+        var mi_worker = new Worker("webworker.js");
+
+        send.onsubmit = function (e) {
+          e.preventDefault();
+          mi_worker.postMessage(numero.value);
+        };
+
+        mi_worker.onmessage = function (e) {
+          resultado.innerHTML = e.data;
+          console.log("fibonacci: " + e.data);
+        };
+      } else {
+        console.log("El navegador no soporta WEbWorkers");
+      }*/
+    </script>
+  </body>
+</html>

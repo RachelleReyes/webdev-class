@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+	<script>
+		function dibujar(){
+			var canvas = document.getElementById("micanvas");
+			
+			if(canvas.getContext) {
+				
+				var contexto = canvas.getContext('2d');
+				contexto.save();
+				
+				var time = new Date();
+				var angulo = (Math.PI) * time.getSeconds() + (Math.PI/1000) * time.getMilliseconds();
+				
+				contexto.clearRect(0,0,600,600);
+				contexto.translate(300,300);
+				contexto.rotate(angulo);
+				contexto.beginPath();
+				//contexto.arc(100,0,5,0,360);
+				// .rect (x, y, ancho, altura) 
+				contexto.rect(100,0,50,50);
+				contexto.fillStyle = 'black';
+				contexto.fill();
+				contexto.closePath();
+				
+				contexto.restore();
+				
+			}
+			window.requestAnimationFrame(dibujar);
+		}
+		
+		
+	</script>
+	</head>
+	<body onload = "dibujar();">
+		<canvas id = "micanvas" width = "600" height = "600" style = "border: solid black 1px"> </canvas>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+	<script>
+	
+		
+
+			var square = 60;
+			var rectX1 = 50;
+			var rectY1 = 400;
+			
+			var rectX2 = 50+square;
+			var rectY2 = 400;
+			var direccion2 = -baseDir;
+			
+			var baseY = 400;
+			var baseDir = 20;
+			var direccion1 = -baseDir;
+			
+		function dibujar(){
+			var canvas = document.getElementById("micanvas");
+		
+			if(canvas.getContext) {
+			
+				var contexto = canvas.getContext('2d');
+				contexto.save();
+				
+				if(rectY1 == baseDir){
+					direccion1 = baseDir;
+					contexto.clearRect(rectX1, rectY1,square,square);
+				}else if(rectY1 == baseY){
+					direccion1 = -baseDir;
+				}
+				if(direccion1>0){
+					contexto.fillStyle = 'white';
+				}else{
+					contexto.fillStyle = 'black';
+				}
+				
+				rectY1 += direccion1;
+				contexto.fillRect(rectX1, rectY1,square,square);
+				contexto.restore();
+				contexto.save();
+				if(rectY2 == baseDir){
+					direccion2 = baseDir;
+					contexto.clearRect(rectX2, rectY2,square,square);
+				}else if(rectY2 == baseY){
+					direccion2 = -baseDir;
+				}
+				
+				if(direccion2>0){
+					contexto.fillStyle = 'white';
+				}else{
+					contexto.fillStyle = 'blue';
+				}
+				
+				// 5 SQUARES
+				rectY2 += direccion2;
+				contexto.fillRect(rectX2, rectY2,square,square);
+				
+				
+			}
+			//window.requestAnimationFrame(dibujar);
+			window.setTimeout(dibujar,40); 
+		}
+		
+		
+	</script>
+	</head>
+	<body onload = "dibujar();">
+		<canvas id = "micanvas" width = "600" height = "600" style = "border: solid black 1px"> </canvas>
+	</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="webworker.css" />
+  </head>
+  <body>
+    <form id="mult">
+      <div class="carac">[</div>
+      <div id="matriz1" class="matriz"></div>
+      <div class="carac">]*[</div>
+      <div id="matriz2" class="matriz"></div>
+      <div class="carac">]</div>
+      <input type="submit" value="Calcular" />
+    </form>
+    <p style="font-size: 30px;"><b>Resultado</b></p>
+    <div id="resultado" class="matriz"></div>
+    <script>
+      var send = document.querySelector("#mult");
+
+      /*===== Dimensiones de las matrices ===== */
+      var row1 = 3;
+      var col1 = 3;
+      var row2 = 3;
+      var col2 = 2;
+
+      /*===== Desplegando las matrices===== */
+      //MATRIZ 1
+      var div1 = document.getElementById("matriz1");
+      for (var i = 0; i < row1 * col1; i++) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "text");
+        input.setAttribute("id", "mat1-" + i);
+        div1.appendChild(input);
+      }
+
+      //MATRIZ 2
+      var div2 = document.getElementById("matriz2");
+      for (var i = 0; i < row2 * col2; i++) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "text");
+        input.setAttribute("id", "mat2-" + i);
+        div2.appendChild(input);
+      }
+
+      //RESULTADO
+      var div3 = document.getElementById("resultado");
+      for (var i = 0; i < row1 * col2; i++) {
+        var input = document.createElement("input");
+        input.setAttribute("type", "text");
+        input.setAttribute("readonly", true);
+        input.setAttribute("id", "mat3-" + i);
+        div3.appendChild(input);
+      }
+
+      if (window.Worker) {
+        var mi_worker = new Worker("webworker.js");
+
+        send.onsubmit = function (e) {
+          e.preventDefault();
+
+          //MATRIZ 1
+          var k = 0;
+          var matrix1 = [];
+          for (var i = 0; i < row1; i++) {
+            matrix1[i] = [];
+            for (var j = 0; j < col1; j++) {
+              matrix1[i][j] = document.getElementById("mat1-" + k++).value;
+            }
+          }
+
+          //MATRIZ 2
+          k = 0;
+          var matrix2 = [];
+          for (var i = 0; i < row2; i++) {
+            matrix2[i] = [];
+            for (var j = 0; j < col2; j++) {
+              matrix2[i][j] = document.getElementById("mat2-" + k++).value;
+            }
+          }
+
+          console.log(matrix1);
+          console.log(matrix2);
+          //Envio de dos matrices
+          mi_worker.postMessage([matrix1, matrix2]);
+        };
+
+        mi_worker.onmessage = function (e) {
+          console.log("Resultado: " + e.data);
+
+          //RESULTADO
+          if (typeof e.data === "object") {
+            k = 0;
+            e.data.forEach((element) =>
+              element.forEach(
+                (element2) =>
+                  (document.getElementById("mat3-" + k++).value = element2)
+              )
+            );
+          }
+        };
+      } else {
+        console.log("El navegador no soporta WebWorkers");
+      }
+    </script>
+  </body>
+</html>

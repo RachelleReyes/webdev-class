@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			
+		}
+		.center {
+			width: 350px;
+			height: 200px;
+			border:3px solid black;
+		}
+		
+		#formulario{
+			padding: 50px;
+		}
+		
+		button{
+			float: right;
+		}
+		
+		
+	</style>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<script language="Javascript">
+
+        function showFBWindow(){
+            url = "popup.html"
+            newwindow=window.open(url,'name','height=200,width=150');
+            if (window.focus) {newwindow.focus()}
+        }
+
+    </script>
+  </head>
+  <body>
+  <script>
+		function close(){
+		for(var i = 0; i<4; i++) {
+			var campo = "campo" + (i+1);
+			var c = "c" + (i+1);
+			localStorage.setItem(campo,ventana.document.getElementById(c).value);
+			//document.getElementById(campo).value = localStorage.getItem(campo);
+		}
+		console.log("checking");
+		checkStorage();	
+	}
+  
+  </script>
+	<div class = "center">
+		<button type="submit" form="formulario" value="submit">O</button>
+		<form id="formulario"> 
+			Campo 1: <input type="text" id="campo1" /> <br>
+			Campo 2: <input type="text" id="campo2" /> <br>
+			Campo 3: <input type="text" id="campo3" /> <br>
+			Campo 4: <input type="text" id="campo4" /> <br>
+		</form>
+		 <input type="button" OnClick="showFBWindow()" value="Open FB" />
+	</div>
+	
+	<div id = "content" style="display: none;">
+		<form id="formulario2"> 
+			Campo 1: <input type="text" id="c1" /> <br>
+			Campo 2: <input type="text" id="c2" /> <br>
+			Campo 3: <input type="text" id="c3" /> <br>
+			Campo 4: <input type="text" id="c4" /> <br>
+		</form>
+		
+		<button id = "close" >Cerrar</button>
+	</div>
+    <script>
+	
+	var send = document.querySelector("#formulario");
+	var close = document.querySelector("#formulario2");
+	var campos = [];
+	var button;
+	
+	var ventana;
+	var h = 150;
+	var w = 300;
+	var y = window.outerHeight/2 + window.screenY - (h/2);
+	var x = window.outerWidth/2 + window.screenX - (w/2);
+	var ventanaN = false;
+	
+	function checkStorage(){
+		if (typeof(Storage) !== "undefined") {
+			for(var i = 0; i<4; i++) {
+				var campo = "campo" + (i+1);
+				if (localStorage.getItem(campo) === null) {
+					console.log("ITS NULL BIATCH");
+					campos[i] = document.getElementById(campo).value;
+				}else{
+					console.log("ITS NOT NULL BIATCH");
+					campos[i] = localStorage.getItem(campo);
+					document.getElementById(campo).value = campos[i];
+				}
+				localStorage.setItem(campo,campos[i]);
+				console.log(campo + " : "+ localStorage.getItem(campo));
+			}
+		} else {
+			console.log("El navegador no soporta WebStorage");
+		}
+	}
+  
+	
+	send.onsubmit = function () {
+		for(var i = 0; i<4; i++) {
+			var campo = "campo" + (i+1);
+			var c = "c" + (i+1);
+			localStorage.setItem(campo,document.getElementById(campo).value);
+		}
+		
+		/*ventana= window.open('','','width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+		ventana.document.body.innerHTML = window.document.getElementById('content').innerHTML;
+		
+		for(var i = 0; i<4; i++) {
+			var campo = "campo" + (i+1);
+			var c = "c" + (i+1);
+			var element = ventana.document.getElementById(c);
+			element.value = localStorage.getItem(campo);
+		}*/
+		
+		
+		/*
+		ventana.onload = function() {
+			
+		button.onsubmit = function () {
+			save();
+			//ventana.close();
+		};
+		};
+		*/
+		
+		ventana= window.open('popup.html','popUp','width=' + w + ', height=' + h + ', top=' + y + ', left=' + x);
+		if (window.focus) {ventana.focus()}
+		
+	};
+	
+	checkStorage();
+	function save(){
+		for(var i = 0; i<4; i++) {
+			var campo = "campo" + (i+1);
+			//var c = "c" + (i+1);
+			localStorage.setItem(campo,document.getElementById(campo).value);
+		}
+		//checkStorage();	
+	}
+	
+
+	
+	
+	//setInterval(checkStorage,100);
+	/*
+	if(ventanaN){
+		setInterval(close,100);
+	}else{
+		setInterval(checkStorage,100);
+	}
+	*/
+    </script>
+  </body>
+</html>

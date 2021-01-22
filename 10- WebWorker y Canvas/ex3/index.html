@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Ping Pong</title>
+		
+	</head>
+<body>
+	 
+    <canvas id="micanvas" canvas.width="900" canvas.height="500" style="border:3px solid black";></canvas>
+    <script>
+       
+	   /*CONTROLES
+			JUGADOR 1: ARRIBA: "W", ABAJO:"S"
+			JUGADOR 2: ARRIBA: "FLECHA ARRIBA", ABAJO:"FLECHA ABAJO"
+	   */
+	   
+		var canvas = document.getElementById('micanvas');
+		var ctx = canvas.getContext('2d');
+		var mi_worker = new Worker("webworker.js");
+		
+		canvas.width = 900; 
+		canvas.height = 500;
+		
+		var player1x = 5, player1y = canvas.height/3;;
+		var player2x = canvas.width-25,player2y = canvas.height/3;
+		
+		var rectx = 20,recty = 150;
+		var dx = 25, dy = 25;
+		var score1, score2;
+
+        var velocidad = 10,esquina = 50,radio = 15;
+        var pelota = { x: 25, y: 25 };
+		
+        var moveX = Math.cos(Math.PI / 180 * esquina) * velocidad;
+        var moveY = Math.sin(Math.PI / 180 * esquina) * velocidad;
+		
+		// Funcion que dibuja un rectangulo
+		function rect(color,x,y,w,h) {
+			ctx.beginPath();
+			ctx.fillStyle = color;
+			ctx.rect(x,y,w,h);
+			ctx.fill();
+			ctx.closePath();
+		}
+		
+		function arc(color,x,y,radio) {
+			ctx.beginPath();
+            ctx.fillStyle = 'red';
+            ctx.arc(x, y, radio, 0, Math.PI * 2, false);
+            ctx.fill();
+            ctx.closePath();
+		}
+
+		function playerKeys(evt){
+			switch (evt.keyCode) {
+				// JUGADOR 1
+				case 87:  //ARRIBA
+					if (player1y - dy > 0){
+						player1y -= dy;
+					}
+					break;
+				case 83:  //ABAJO
+					if (player1y + dy < canvas.height-recty){
+						player1y += dy;
+					}
+					break;
+					
+				// JUGADOR 2	
+				case 38: //ARRIBA
+					if (player2y - dy > 0){
+						player2y -= dy;
+					}
+					break;
+				case 40: //ABAJO
+					if (player2y + dy < canvas.height-recty){
+						player2y += dy;
+					}
+					break;
+			}
+		}
+		
+		if(localStorage.getItem("score1")>0 || localStorage.getItem("score2")>0){
+			score1 = localStorage.getItem("score1");
+			score2 = localStorage.getItem("score2");
+		}else{
+			score1 = 0;
+			score2 = 0;
+		}
+		
+		// Funcion principal
+        function game() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+			rect('green',player1x,player1y,rectx,recty);
+			rect('purple',player2x,player2y,rectx,recty);
+		
+			// WEBWORKER
+			if (window.Worker) {
+			
+				mi_worker.postMessage([pelota.x,pelota.y,moveX,moveY,player1y,player2y,score1,score2]);
+				mi_worker.onmessage = function (e) {
+				 moveX = e.data[0];
+				 moveY = e.data[1];
+				 score1 = e.data[2];
+				 score2 = e.data[3];
+				 pelota.x += moveX;
+				 pelota.y += moveY;
+				};
+				
+			} else {
+				console.log("El navegador no soporta WebWorkers");
+			}
+			
+			// WEBSTORAGE
+			if (typeof(Storage) !== "undefined") {
+			  // Guardar
+			  localStorage.setItem("score1",score1);
+			  localStorage.setItem("score2",score2);
+			  // Obtener
+			  document.getElementById('player1').value = localStorage.getItem("score1");
+			  document.getElementById('player2').value = localStorage.getItem("score2");
+			} else {
+				console.log("El navegador no soporta WebStorage");
+			}
+            arc('red',pelota.x, pelota.y, radio);
+			
+        }
+		function reset(){
+			score1 = 0;
+			score2 = 0;
+		}
+		
+		window.addEventListener('keydown',playerKeys,true);
+		setInterval(game, 1000 / 50);
+		
+    </script>
+	<div id = "footer" style="font-size:25px";> 
+		Player 1 
+		<input type="text" id="player1" readonly style="font-size:20px";>
+		<input type="text" id="player2" readonly style="font-size:20px";>
+		Player 2
+	</div> 
+	<button onclick="reset()" style="font-size:20px";>Reset</button>
+	
+</body>
+</html>

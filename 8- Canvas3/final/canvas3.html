@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+	<script>
+	
+			var rectX = 150;
+			var baseY = 300;
+			var square = 60;
+			var baseDir = 5;
+			var direction = -baseDir;
+			var rectY= [300,220,160,80];
+			var dir= [-baseDir,-baseDir,-baseDir,-baseDir];
+
+			
+		function dibujar(){
+			var canvas = document.getElementById("micanvas");
+			if(canvas.getContext) {
+				var contexto = canvas.getContext('2d');
+				
+				for(var i = 0; i<4; i++){
+					if(rectY[i] == (square-10)){
+						dir[i] = baseDir;
+					}else if(rectY[i] == (baseY-square/2)){
+						dir[i] = -baseDir;
+					}
+					
+					if(dir[i]>0)
+						contexto.fillStyle = 'white';
+					else{ 
+						contexto.fillStyle = 'black';
+						contexto.fillRect(rectX+square*i, rectY[i],square,baseY-rectY[i]+square);
+					}
+					
+					contexto.fillRect(rectX+square*i, rectY[i],square,square);
+					rectY[i] += dir[i];
+				}
+			}
+			window.requestAnimationFrame(dibujar);
+		}
+		
+		
+	</script>
+	</head>
+	<body onload = "dibujar();">
+		<canvas id = "micanvas" width = "600" height = "600" style = "border: solid black 1px"> </canvas>
+	</body>
+</html>

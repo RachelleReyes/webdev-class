@@ -1,0 +1,73 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="plantas.css">
+    <script>
+        function getJSON(archivo,callback)
+        {
+            var JSONrequest = new XMLHttpRequest();
+            JSONrequest.open("GET",archivo,true); 
+            JSONrequest.setRequestHeader("Content-Type","application/json");
+            
+            /*Event*/
+            JSONrequest.onreadystatechange = function()
+            {
+                if (JSONrequest.readyState === 4 && JSONrequest.status == 200)
+                {
+                    
+                    callback(JSONrequest.responseText);
+                }
+            }
+            JSONrequest.send();
+           
+        }
+
+        function  loadJSON(json)
+        {
+            miJson = JSON.parse(json)
+            console.log(miJson.Plantas) /* cantidad de datos*/
+
+            var root = document.getElementById("JSON")
+            
+            /*crear divs cabeceras*/
+            var divcabecera = document.createElement("div")
+            divcabecera.setAttribute("class", "plantas-contenedor")
+            for(var nombre in  miJson.Plantas[0])
+            {
+                var divhead = document.createElement("div")
+                divhead.setAttribute("class","cabeceras")
+                divhead.innerHTML = nombre
+                divcabecera.appendChild(divhead)
+            }
+            root.appendChild(divcabecera)
+
+            /*Crear divs plantas */
+            for(var dato=0;dato<miJson.Plantas.length;dato++)
+            {
+                console.log(miJson.Plantas[dato]["Life span"])
+                var divplanta = document.createElement("div")
+                divplanta.setAttribute("class", "plantas-contenedor")
+
+                for(var propiedades in miJson.Plantas[dato])
+                {
+                    /*console.log(propiedades)*/
+                    var divpropiedad = document.createElement("div")
+                    divpropiedad.setAttribute("class","plantas-datos")
+                    divpropiedad.innerHTML = miJson.Plantas[dato][propiedades]
+                    divplanta.appendChild(divpropiedad)
+                }
+                root.appendChild(divplanta)
+            }
+        }
+    </script>
+</head> 
+<html>        
+    <body>
+        
+        <div id="JSON"> 
+            <script>
+                getJSON("plants.json",loadJSON);
+            </script>
+        </div>
+
+    </body>
+</html>
